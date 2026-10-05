@@ -1,0 +1,1499 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Aerox Voult</title>
+
+<style>
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    font-family:Arial,Helvetica,sans-serif;
+}
+
+body{
+    background:#f5f5f5;
+    color:#111;
+}
+
+header{
+    background:#111;
+    color:white;
+    padding:8px 3%;
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    position:sticky;
+    top:0;
+    z-index:1000;
+}
+
+.logo {
+    width: 110px;
+    height: 45px;
+    display: flex;
+    align-items: center;
+    overflow: hidden;
+}
+
+.logo img {
+    width: 100% !important;
+    height: 100% !important;
+    max-width: 110px !important;
+    max-height: 45px !important;
+    object-fit: contain !important;
+    display: block !important;
+}
+
+.header-right{
+    display:flex;
+    align-items:center;
+    gap:7px;
+    flex-wrap:nowrap;
+}
+
+.cart-btn{
+    background:white;
+    color:#111;
+    border:0;
+    padding:10px 15px;
+    border-radius:8px;
+    cursor:pointer;
+}
+
+.cart-btn:hover{
+    background:#FFF090;
+}
+
+/* ================================
+   CATEGORY MENU / HAMBURGER
+================================ */
+
+.category-bar{
+    background:#fff;
+    height:185px;
+    border-bottom:3px solid #ff8a00;
+    display:flex;
+    align-items:center;
+    justify-content:flex-start;
+    padding-left:6%;
+    position:relative;
+    z-index:900;
+}
+
+.category-header-btn{
+    width:42px;
+    height:42px;
+    border:0;
+    background:white;
+    border-radius:8px;
+    cursor:pointer;
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    justify-content:center;
+    gap:4px;
+    flex-shrink:0;
+}
+
+.category-header-btn span{
+    display:block;
+    width:22px;
+    height:3px;
+    background:#111;
+    border-radius:2px;
+}
+
+.category-header-btn:hover{
+    background:#E4F7A8;
+}
+
+.category-menu-btn{
+    width:105px;
+    height:105px;
+    border:0;
+    background:transparent;
+    cursor:pointer;
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    justify-content:center;
+    gap:9px;
+    border-radius:50%;
+}
+
+.category-menu-btn span{
+    display:block;
+    width:58px;
+    height:7px;
+    background:#111;
+    border-radius:2px;
+    transition:.25s;
+}
+
+.category-menu-btn:hover{
+    background:#f5f5f5;
+}
+
+.category-overlay{
+    display:none;
+    position:fixed;
+    inset:0;
+    background:rgba(0,0,0,.45);
+    z-index:2998;
+}
+
+.category-overlay.active{
+    display:block;
+}
+
+.category-drawer{
+    position:fixed;
+    top:0;
+    left:-310px;
+    width:290px;
+    height:100vh;
+    background:#fff;
+    z-index:2999;
+    box-shadow:5px 0 20px rgba(0,0,0,.2);
+    transition:left .3s ease;
+    padding:22px 18px;
+    overflow-y:auto;
+}
+
+.category-drawer.active{
+    left:0;
+}
+
+.category-drawer-head{
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    padding:5px 4px 18px;
+    border-bottom:1px solid #eee;
+    margin-bottom:12px;
+}
+
+.category-drawer-head h2{
+    font-size:22px;
+    margin:0;
+    color: #805353 ;
+    font-weight:bold;
+}
+
+.category-close{
+    border:0;
+    background:transparent;
+    font-size:32px;
+    line-height:1;
+    cursor:pointer;
+    color:#111;
+}
+
+.category-drawer button{
+    width:100%;
+    border:0;
+    background:#E4E8F3;
+    color: #000000 !important;
+    padding:14px 16px;
+    margin:6px 0;
+    border-radius:9px;
+    text-align:left;
+    font-size:16px;
+    cursor:pointer;
+}
+
+.category-drawer button:hover{
+    background:#111;
+    color:#fff;
+}
+
+.drawer-contact{
+    margin-top:18px;
+    padding-top:16px;
+    border-top:1px solid #e8e8e8;
+}
+.drawer-contact-title{
+    margin:0 0 10px 4px;
+    color:#777;
+    font-size:13px;
+    font-weight:bold;
+    letter-spacing:.5px;
+}
+.category-drawer .drawer-contact a{
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    gap:9px;
+    width:100%;
+    margin:8px 0;
+    padding:13px 12px;
+    border-radius:9px;
+    color:#FFFFFF;
+    text-decoration:none;
+    text-align:center;
+    font-size:15px;
+    font-weight:bold;
+}
+.category-drawer .drawer-contact .drawer-whatsapp{background:#25D366;}
+
+.category-drawer .drawer-contact .drawer-telegram{background:#229ED9;}
+.category-drawer .drawer-contact .contact-logo{
+    width:22px;
+    height:22px;
+    flex:0 0 22px;
+    display:block;
+}
+.category-drawer .drawer-contact .whatsapp-logo{color:#fff;}
+.category-drawer .drawer-contact .telegram-logo{color:#fff;}
+.category-drawer .drawer-contact a:hover{filter:brightness(.92);}
+
+.search-box{
+    padding:4% 17px;
+}
+
+.search-box input{
+    width:100%;
+    padding:14px;
+    border:1px solid #DDDDDD;
+    border-radius:8px;
+    font-size:16px;
+    outline:none;
+}
+
+.products{
+    padding:0 5% 50px;
+    display:grid;
+    grid-template-columns:repeat(auto-fit,minmax(210px,1fr));
+    gap:20px;
+}
+
+.product{
+    background:white;
+    border-radius:12px;
+    overflow:hidden;
+    box-shadow:0 3px 12px rgba(0,0,0,.08);
+    transition:.2s;
+}
+
+.product:hover{
+    transform:translateY(-4px);
+}
+
+.product-image{
+    width:100%;
+    height:230px;
+    object-fit:cover;
+    cursor:pointer;
+}
+
+.product-info{
+    padding:15px;
+}
+
+.product-info h3{
+    margin:7px 0;
+    cursor:pointer;
+}
+
+.category{
+    color:#777;
+    font-size:13px;
+}
+
+.price{
+    font-size:19px;
+        font-weight:bold;
+    margin:10px 0;
+}
+
+.add-btn{
+    width:100%;
+    padding:11px;
+    border:0;
+    background:#111;
+    color:white;
+    border-radius:7px;
+    cursor:pointer;
+}
+
+.product-detail-modal{
+    display:none;
+    position:fixed;
+    inset:0;
+    z-index:2100;
+    background:rgba(0,0,0,.7);
+    align-items:center;
+    justify-content:center;
+    padding:16px;
+}
+.product-detail-box{
+    width:100%;
+    max-width:480px;
+    max-height:90vh;
+    overflow:auto;
+    background:#fff;
+    border-radius:14px;
+    padding:18px;
+    position:relative;
+}
+.product-detail-image{
+    width:100%;
+    height:280px;
+    object-fit:contain;
+    background:#f7f7f7;
+    border-radius:10px;
+}
+.product-detail-box h2{margin:14px 0 8px;}
+.product-detail-price{font-size:21px;font-weight:bold;margin:10px 0;}
+.product-detail-close{
+    position:absolute;
+    right:14px;
+    top:8px;
+    border:0;
+    background:#fff;
+    font-size:30px;
+    cursor:pointer;
+    z-index:1;
+}
+.product-detail-text{line-height:1.7;color:#555;}
+
+.modal{
+    display:none;
+    position:fixed;
+    inset:0;
+    background:rgba(0, 0, 0, 0.65);
+    z-index:2000;
+    align-items:center;
+    justify-content:center;
+    padding:20px;
+}
+
+.modal-box{
+    background:white;
+    width:100%;
+    max-width:500px;
+    max-height:90vh;
+    overflow:auto;
+    border-radius:14px;
+    padding:20px;
+    position:relative;
+}
+
+.close{
+    position:absolute;
+    right:15px;
+    top:10px;
+    font-size:28px;
+    cursor:pointer;
+}
+
+.cart-item{
+    display:flex;
+    gap:12px;
+    align-items:center;
+    border-bottom:1px solid #ddd;
+    padding:12px 0;
+}
+
+.cart-item img{
+    width:65px;
+    height:65px;
+    object-fit:cover;
+    border-radius:7px;
+}
+
+.cart-info{
+    flex:1;
+}
+
+.qty{
+    display:flex;
+    gap:8px;
+    align-items:center;
+    margin-top:7px;
+}
+
+.qty button{
+    width:28px;
+    height:28px;
+    border:0;
+    background:#111;
+    color:white;
+    border-radius:5px;
+    cursor:pointer;
+}
+
+.remove{
+    color:red;
+    cursor:pointer;
+    font-size:13px;
+    margin-top:5px;
+}
+
+.total{
+    font-size:20px;
+    font-weight:bold;
+    margin-top:20px;
+}
+
+
+.checkout-box{margin-top:18px;border-top:2px dashed #ddd;padding-top:16px;}
+.checkout-box h3{margin-bottom:12px;font-size:18px;}
+.checkout-box label.fl{display:block;font-size:14px;font-weight:bold;margin:10px 0 5px;}
+.checkout-box input[type=text],.checkout-box input[type=tel],.checkout-box textarea{
+    width:100%;padding:12px;border:1px solid #ccc;border-radius:8px;font-size:15px;outline:none;}
+.checkout-box input:focus,.checkout-box textarea:focus{border-color:#111;}
+.checkout-box textarea{min-height:75px;resize:vertical;}
+.area-opt{display:flex;align-items:center;gap:10px;border:1px solid #ccc;border-radius:8px;
+    padding:12px;margin-top:8px;cursor:pointer;font-size:15px;}
+.area-opt input{width:18px;height:18px;accent-color:#111;}
+.area-opt span{flex:1;}
+.area-opt b{white-space:nowrap;}
+.area-opt.active{border-color:#111;background:#f3f3f3;}
+.cod-note{margin-top:10px;font-size:13px;color:#555;background:#fff7e6;border:1px solid #ffd591;
+    padding:9px 11px;border-radius:8px;}
+.sum-row{display:flex;justify-content:space-between;margin-top:8px;font-size:15px;}
+.sum-row.grand{font-size:20px;font-weight:bold;border-top:1px solid #ddd;padding-top:10px;margin-top:12px;}
+.place-order{width:100%;margin-top:16px;padding:14px;border:0;border-radius:8px;
+    background:#111;color:#fff;font-size:16px;font-weight:bold;cursor:pointer;}
+.place-order:disabled{opacity:.6;cursor:default;}
+.form-error{color:#d00;font-size:13px;margin-top:8px;display:none;}
+.success-box{text-align:center;padding:10px 0;}
+.success-box .tick{font-size:54px;}
+.success-box p{margin-top:10px;line-height:1.6;color:#444;}
+
+
+footer{
+    background:#111;
+    color:#C2D6E1;
+    text-align:center;
+    padding:10px;
+}
+
+@media(max-width:600px){
+
+    .logo{
+        font-size:20px;
+    }
+
+    .cart-btn{
+        padding:9px 11px;
+    }
+
+    .category-header-btn{
+        width:38px;
+        height:38px;
+    }
+
+    .category-header-btn span{
+        width:20px;
+        height:3px;
+    }
+
+    .category-menu-btn span{
+        width:52px;
+        height:6px;
+    }
+
+    .category-drawer{
+        width:82vw;
+        max-width:290px;
+    }
+
+    .products{
+        grid-template-columns:repeat(2,1fr);
+        gap:12px;
+        padding-left:4%;
+        padding-right:4%;
+    }
+
+    .product-image{
+        height:170px;
+    }
+
+    .product-info{
+        padding:12px;
+    }
+
+    .product-info h3{
+        font-size:15px;
+    }
+
+    .price{
+        font-size:17px;
+    }
+}
+</style>
+
+<style id="clean-theme">
+:root{--ink:#14161a;--muted:#6b7280;--line:#e8eaee;--bg:#fafafa;--accent:#14161a;--radius:16px}
+body{background:var(--bg);color:var(--ink);-webkit-font-smoothing:antialiased;
+ font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Inter,Roboto,Arial,sans-serif}
+*{font-family:inherit}
+header{background:#111;padding:10px 5%;box-shadow:0 1px 0 rgba(255,255,255,.06)}
+.cart-btn{background:#fff;color:var(--ink);font-weight:600;padding:9px 16px;border-radius:999px;transition:.2s}
+.cart-btn:hover{background:#f0f0f0}
+.category-header-btn{background:rgba(255,255,255,.12);border-radius:50%}
+.category-header-btn span{background:#fff}
+.category-header-btn:hover{background:rgba(255,255,255,.22)}
+.hero{text-align:center;padding:44px 6% 18px;max-width:760px;margin:0 auto}
+.hero small{display:inline-block;font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:var(--muted);
+ border:1px solid var(--line);background:#fff;padding:6px 12px;border-radius:999px}
+.hero h1{font-size:clamp(28px,6vw,44px);line-height:1.15;margin:16px 0 10px;letter-spacing:-.02em}
+.hero p{color:var(--muted);font-size:16px;line-height:1.6}
+.perks{display:flex;justify-content:center;gap:10px;flex-wrap:wrap;margin-top:18px}
+.perks span{font-size:13px;color:var(--ink);background:#fff;border:1px solid var(--line);padding:7px 12px;border-radius:999px}
+.search-box{max-width:620px;margin:0 auto;padding:18px 5%}
+.search-box input{background:#fff;border:1px solid var(--line);border-radius:999px;padding:14px 20px;
+ box-shadow:0 2px 10px rgba(0,0,0,.04);transition:.2s}
+.search-box input:focus{border-color:var(--ink);box-shadow:0 0 0 4px rgba(20,22,26,.07)}
+.products{max-width:1200px;margin:0 auto;padding:10px 5% 60px;gap:22px;grid-template-columns:repeat(auto-fill,minmax(220px,1fr))}
+.product{background:#fff;border:1px solid var(--line);border-radius:var(--radius);box-shadow:none;transition:.25s}
+.product:hover{transform:translateY(-4px);box-shadow:0 14px 30px rgba(0,0,0,.08)}
+.product-image{height:auto;aspect-ratio:1/1;background:#f3f4f6;transition:.4s}
+.product:hover .product-image{transform:scale(1.03)}
+.product{overflow:hidden}
+.product-info{padding:16px}
+.category{color:var(--muted);font-size:11px;text-transform:uppercase;letter-spacing:.1em}
+.product-info h3{font-size:16px;font-weight:600;line-height:1.35;margin:6px 0 2px}
+.price{font-size:18px;font-weight:700;margin:8px 0 12px}
+.add-btn,.add-cart{background:var(--ink);border-radius:999px;font-weight:600;transition:.2s}
+.add-btn:hover,.add-cart:hover{background:#000;transform:translateY(-1px)}
+.category-drawer{border-radius:0 20px 20px 0}
+.category-drawer-head h2{color:var(--ink)}
+.category-drawer button{background:#f3f4f6;border-radius:12px}
+.modal-box,.product-detail-box,.order-modal-box{border-radius:20px;box-shadow:0 30px 60px rgba(0,0,0,.25)}
+.cart-item img{border-radius:12px}
+.qty button{border-radius:50%}
+.checkout-box input[type=text],.checkout-box input[type=tel],.checkout-box textarea{border-radius:12px;background:#fafafa}
+.area-opt{border-radius:12px}.area-opt.active{background:#f3f4f6}
+.place-order{border-radius:999px;padding:15px}
+.buy-now{background:#fff;color:var(--ink);border:1.5px solid var(--ink);border-radius:999px;font-weight:600}
+.buy-now:hover{background:var(--ink);color:#fff}
+footer{background:#fff;color:var(--muted);border-top:1px solid var(--line);padding:28px 5%;line-height:1.9;font-size:14px}
+/* product page */
+.back{background:rgba(255,255,255,.12);border-radius:999px;font-size:14px}
+.product-page{max-width:1100px}
+.product-container{background:#fff;border:1px solid var(--line);border-radius:24px;box-shadow:none;padding:28px}
+.main-image{border-radius:18px;background:#f3f4f6}
+.thumbnails{display:flex;gap:10px;margin-top:12px;flex-wrap:wrap}
+.thumbnails img{width:68px;height:68px;object-fit:cover;border-radius:12px;border:1.5px solid var(--line);cursor:pointer}
+.thumbnails img:hover{border-color:var(--ink)}
+.product-title{letter-spacing:-.02em;line-height:1.2}
+.details{border-top:1px solid var(--line)}
+@media(max-width:600px){.products{grid-template-columns:repeat(2,1fr);gap:12px;padding:6px 14px 40px}
+ .product-info{padding:12px}.product-info h3{font-size:14px}.hero{padding-top:30px}
+ .product-container{padding:16px;border-radius:18px}}
+</style>
+<style id="hl-style">
+.highlights{max-width:1200px;margin:0 auto;padding:18px 5% 0}
+.hl-row{display:flex;overflow-x:auto;border-radius:18px;scroll-snap-type:x mandatory;scrollbar-width:none;
+ cursor:grab;-webkit-overflow-scrolling:touch;user-select:none;-webkit-user-select:none}
+.hl-row::-webkit-scrollbar{display:none}
+.hl-row.dragging{cursor:grabbing;scroll-snap-type:none}
+.hl-slide{flex:0 0 100%;scroll-snap-align:center;position:relative;aspect-ratio:16/8;background:#eceef1;overflow:hidden}
+.hl-slide img{position:absolute;inset:0;width:100%;height:100%;-webkit-user-drag:none;pointer-events:none}
+.hl-slide .bg{object-fit:cover;filter:blur(22px) brightness(.9);transform:scale(1.2)}
+.hl-slide .fg{object-fit:contain}
+@media(min-width:800px){.hl-slide{aspect-ratio:16/6}}
+/* active (pressed/open) colours for header buttons */
+.cart-btn,.category-header-btn{transition:background .2s,color .2s}
+.cart-btn.is-active{background:#ffb020;color:#111}
+.category-header-btn.is-active{background:#ffb020}
+.category-header-btn.is-active span{background:#111}
+.cart-btn:active{background:#ffb020}
+</style>
+
+</head>
+
+<body>
+
+<header>
+
+    <div class="logo">
+      <img src="image/logo.png" alt="Logo">
+    </div>
+
+    <div class="header-right">
+
+        <button
+            class="cart-btn"
+            onclick="openCart()"
+        >
+            🛒 Cart (<span id="cartCount">0</span>)
+        </button>
+
+        <button
+            class="category-header-btn"
+            onclick="openCategoryMenu()"
+            aria-label="Open categories"
+        >
+            <span></span>
+            <span></span>
+            <span></span>
+        </button>
+
+    </div>
+
+</header>
+
+
+<!-- CATEGORY DRAWER -->
+<div class="category-overlay"
+     id="categoryOverlay"
+     onclick="closeCategoryMenu()"></div>
+
+<div class="category-drawer" id="categoryDrawer">
+
+    <div class="category-drawer-head">
+        <h2>Categories</h2>
+        
+    </div>
+
+    <button onclick="selectCategory('All')">All</button>
+    <button onclick="selectCategory('Vape')">Vape</button>
+    <button onclick="selectCategory('Flavor')">Flavor</button>
+    <button onclick="selectCategory('Lighter')">Lighter</button>
+    <button onclick="selectCategory('Safety Tools')">Safety Tools</button>
+    <button onclick="selectCategory('Perfume ')">Perfume </button>
+
+    <div class="drawer-contact">
+        <p class="drawer-contact-title">CONTACT US</p>
+        <a class="drawer-whatsapp"
+           href="https://wa.me/8801987998144"
+           target="_blank" rel="noopener">
+            <svg class="contact-logo whatsapp-logo" viewBox="0 0 32 32" aria-hidden="true">
+                <path fill="currentColor" d="M16 .0C7.18 0 .02 7.15.02 15.96c0 2.82.74 5.57 2.15 7.99L0 32l8.28-2.17a15.9 15.9 0 0 0 7.72 1.99h.01C24.82 31.82 32 24.67 32 15.86 32 7.05 24.82 0 16 0Zm0 28.99h-.01a13.1 13.1 0 0 1-6.67-1.82l-.48-.29-4.92 1.29 1.31-4.79-.31-.49a13.02 13.02 0 0 1-2.01-6.93C2.91 8.75 8.78 2.9 16 2.9s13.09 5.85 13.09 13.04S23.22 28.99 16 28.99Zm7.19-9.77c-.39-.2-2.31-1.14-2.67-1.27-.36-.13-.62-.2-.88.2-.26.39-1.01 1.27-1.24 1.53-.23.26-.46.29-.85.1-.39-.2-1.65-.61-3.14-1.94-1.16-1.03-1.94-2.3-2.17-2.69-.23-.39-.02-.6.17-.79.17-.17.39-.46.59-.69.2-.23.26-.39.39-.65.13-.26.07-.49-.03-.69-.1-.2-.88-2.12-1.21-2.9-.32-.76-.64-.66-.88-.67h-.75c-.26 0-.69.1-1.05.49-.36.39-1.38 1.34-1.38 3.26s1.41 3.78 1.61 4.04c.2.26 2.77 4.22 6.71 5.92.94.41 1.67.65 2.24.83.94.3 1.79.26 2.46.16.75-.11 2.31-.95 2.64-1.86.33-.91.33-1.69.23-1.86-.1-.16-.36-.26-.75-.46Z"/>
+            </svg>
+            WhatsApp Contact
+        </a>
+        <a class="drawer-telegram"
+           href="https://t.me/aeroxvault"
+           target="_blank" rel="noopener">
+            <svg class="contact-logo telegram-logo" viewBox="0 0 24 24" aria-hidden="true">
+                <path fill="currentColor" d="M22.0 2.2 18.6 21c-.26 1.32-.96 1.65-1.95 1.03l-5.4-3.98-2.6 2.5c-.29.29-.53.53-1.09.53l.39-5.5L17.97 6.9c.42-.39-.09-.61-.65-.22L6.2 13.75.9 12.09c-1.15-.36-1.17-1.15.24-1.7L21.05 2.6c.95-.35 1.78.23 1.0-.4Z"/>
+            </svg>
+            Telegram Contact
+        </a>
+    </div>
+
+</div>
+
+<section class="highlights">
+    <div class="hl-row" id="highlights"></div>
+</section>
+
+<div class="search-box">
+
+    <input
+        type="text"
+        id="search"
+        placeholder="Search products..."
+        onkeyup="searchProducts()"
+    >
+
+</div>
+
+
+<section
+    class="products"
+    id="products"
+></section>
+
+
+<footer>
+    <p>⚜️Aerox Vault Your Trusted Partner.</p>
+    <p>We always provide our best products.💎</p>
+    <p>📍Address: Dhaka, Saver, Zirabo</p>
+    <p>📞 Phone: +8801987998144</p>
+    <p>💬 Whatsapp: +8801987998144</p>
+</footer>
+
+
+<!-- PRODUCT DETAILS (opens on this page) -->
+<div class="product-detail-modal" id="productDetailModal"
+     onclick="if(event.target===this) closeProductDetails()">
+    <div class="product-detail-box">
+        <button class="product-detail-close" onclick="closeProductDetails()">×</button>
+        <div id="productDetailContent"></div>
+    </div>
+</div>
+
+
+<!-- CART -->
+
+<div
+    class="modal"
+    id="cartModal"
+>
+
+    <div class="modal-box">
+
+        <span
+            class="close"
+            onclick="closeCart()"
+        >
+            ×
+        </span>
+
+        <h2>🛒 Your Cart</h2>
+
+        <br>
+
+        <div id="cartItems"></div>
+
+        <div class="total">
+            Products Total: ৳<span id="cartTotal">0</span>
+        </div>
+
+        <div class="checkout-box" id="checkoutBox">
+        <h3>📦 অর্ডার তথ্য</h3>
+
+        <label class="fl" for="custName">নাম / Name</label>
+        <input type="text" id="custName" placeholder="আপনার নাম" autocomplete="name">
+
+        <label class="fl" for="custPhone">মোবাইল নম্বর / Phone</label>
+        <input type="tel" id="custPhone" placeholder="01XXXXXXXXX" inputmode="numeric" autocomplete="tel">
+
+        <label class="fl" for="custAddress">ঠিকানা / Address</label>
+        <textarea id="custAddress" placeholder="বাসা/রোড, এলাকা, থানা, জেলা" autocomplete="street-address"></textarea>
+
+        <label class="fl">ডেলিভারি এরিয়া / Delivery Area (Cash on Delivery)</label>
+        <label class="area-opt active" id="optDhaka">
+            <input type="radio" name="area" value="dhaka" checked onchange="updateSummary()">
+            <span>ঢাকার ভেতরে</span><b>৳80</b>
+        </label>
+        <label class="area-opt" id="optOutside">
+            <input type="radio" name="area" value="outside" onchange="updateSummary()">
+            <span>ঢাকার বাইরে</span><b>৳120</b>
+        </label>
+        <div class="cod-note">💵 Cash on Delivery: পণ্য হাতে পেয়ে টাকা দেবেন।</div>
+
+        <div class="sum-row"><span>Products Total</span><span>৳<span id="subTotal">0</span></span></div>
+        <div class="sum-row"><span>Delivery Charge</span><span>৳<span id="deliveryFee">80</span></span></div>
+        <div class="sum-row grand"><span>Grand Total</span><span>৳<span id="grandTotal">0</span></span></div>
+        <div class="form-error" id="formError"></div>
+        <button class="place-order" id="placeBtn" onclick="placeOrder()">✅ Place Order (Cash on Delivery)</button>
+    </div>
+
+    </div>
+
+</div>
+
+
+<script>
+
+
+/* =================================================
+   ORDER SETTINGS
+   ORDER_ENDPOINT: অর্ডার নিজের কাছে পাঠাতে চাইলে এখানে
+   Formspree / Google Apps Script ইত্যাদির URL বসাবে।
+================================================= */
+
+const ORDER_ENDPOINT = "https://script.google.com/macros/s/AKfycbyPOsgL3UnRL_9uiE9MREBj_pBRWoRVyUkgWCE4YT-9eZYI5Y62ixO_auHTraZst66SDw/exec";
+const DELIVERY_CHARGE = { dhaka:80, outside:120 };
+
+function getArea(){
+    const r = document.querySelector('input[name="area"]:checked');
+    return r ? r.value : "dhaka";
+}
+
+function esc(t){
+    const d = document.createElement("div");
+    d.textContent = t;
+    return d.innerHTML;
+}
+
+function validateCustomer(prefix){
+    const name = document.getElementById(prefix+"custName").value.trim();
+    const phone = document.getElementById(prefix+"custPhone").value.trim().replace(/[\s-]/g,"");
+    const address = document.getElementById(prefix+"custAddress").value.trim();
+    const err = document.getElementById(prefix+"formError");
+    let msg = "";
+    if(name.length < 2) msg = "আপনার নাম লিখুন।";
+    else if(!/^(\+?88)?01[3-9]\d{8}$/.test(phone)) msg = "সঠিক মোবাইল নম্বর দিন (যেমন 01XXXXXXXXX)।";
+    else if(address.length < 8) msg = "পূর্ণ ঠিকানা লিখুন।";
+    err.innerText = msg;
+    err.style.display = msg ? "block" : "none";
+    return msg ? null : { name, phone, address };
+}
+
+async function submitOrder(order){
+    const list = JSON.parse(localStorage.getItem("AeroxOrders") || "[]");
+    list.push(order);
+    localStorage.setItem("AeroxOrders", JSON.stringify(list));
+    if(!ORDER_ENDPOINT) return;
+    const res = await fetch(ORDER_ENDPOINT,{
+        method:"POST",
+        headers:{ "Content-Type":"text/plain;charset=utf-8" },
+        body:JSON.stringify(order)
+    });
+    const data = await res.json();
+    if(!data.ok) throw new Error(data.error || "failed");
+}
+
+function successHTML(order){
+    return `
+    <div class="success-box">
+        <div class="tick">✅</div>
+        <h2>অর্ডার সম্পন্ন হয়েছে!</h2>
+        <p>অর্ডার নম্বর: <b>${order.id}</b><br>
+        মোট: <b>৳${order.grandTotal}</b> (Cash on Delivery)<br>
+        আমরা শীঘ্রই ${esc(order.phone)} নম্বরে যোগাযোগ করব।</p>
+        <button class="place-order" onclick="location.reload()">ঠিক আছে</button>
+    </div>`;
+}
+
+
+/* =================================================
+   PRODUCTS
+================================================= */
+
+const products = [
+
+    {
+        id:1,
+        name:"D-BREATH 30K Puffs",
+        category:"Vape",
+        price:1700,
+        image:"image/d-breath30k1.jpg"
+    },
+
+    {
+        id:2,
+        name:"D-Breath 6k Puffs",
+        category:"Vape",
+        price:1300,
+        image:"image/d-breath6k1.jpg"
+    },
+
+    {
+        id:3,
+        name:"flyto 800 Puffs",
+        category:"Vape",
+        price:600,
+        image:"image/flyto8p1.jpg"
+    },
+
+    {
+        id:4,
+        name:"Kiligbar 6k Puffs",
+        category:"Vape",
+        price:1300,
+        image:"image/kiligbar6k1.jpg"
+    },
+
+    {
+        id:5,
+        name:"kit Kiligbar 6k Puffs",
+        category:"Flavor",
+        price:500,
+        image:"image/kitkiligbar6k1.jpg"
+    },
+    
+
+];
+
+
+/* =================================================
+   CART FROM LOCAL STORAGE
+================================================= */
+
+let cart =
+    JSON.parse(
+        localStorage.getItem("AeroxCart")
+    ) || [];
+
+
+let currentProducts = [...products];
+
+
+/* =================================================
+   SAVE CART
+================================================= */
+
+function saveCart(){
+
+    localStorage.setItem(
+        "AeroxCart",
+        JSON.stringify(cart)
+    );
+
+}
+
+
+/* =================================================
+   DISPLAY PRODUCTS
+================================================= */
+
+function displayProducts(list){
+
+    const container =
+        document.getElementById("products");
+
+    container.innerHTML = "";
+
+    if(list.length === 0){
+
+        container.innerHTML =
+            "<p>No products found.</p>";
+
+        return;
+    }
+
+    list.forEach(product => {
+
+        container.innerHTML += `
+
+            <div class="product">
+
+                <img
+                    class="product-image"
+                    src="${product.image}"
+                    onclick="openProduct(${product.id})"
+                    alt="${product.name}"
+                >
+
+                <div class="product-info">
+
+                    <div class="category">
+                        ${product.category}
+                    </div>
+
+                    <h3
+                        onclick="openProduct(${product.id})"
+                    >
+                        ${product.name}
+                    </h3>
+
+                    <div class="price">
+                        ৳${product.price}
+                    </div>
+
+                    <button
+                        class="add-btn"
+                        onclick="addToCart(${product.id})"
+                    >
+                        Add to Cart
+                    </button>
+
+                </div>
+
+            </div>
+
+        `;
+
+    });
+
+}
+
+
+/* =================================================
+   OPEN PRODUCT PAGE
+================================================= */
+
+function openProduct(id){
+    window.location.href = "product.html?id=" + id;
+}
+
+function closeProductDetails(){
+    document.getElementById("productDetailModal").style.display = "none";
+    document.body.style.overflow = "";
+}
+
+
+/* =================================================
+   CATEGORY MENU
+================================================= */
+
+function openCategoryMenu(){
+    document.getElementById("categoryDrawer").classList.add("active");
+    document.querySelector(".category-header-btn").classList.add("is-active");
+    document.getElementById("categoryOverlay").classList.add("active");
+    document.body.style.overflow = "hidden";
+}
+
+function closeCategoryMenu(){
+    document.getElementById("categoryDrawer").classList.remove("active");
+    document.querySelector(".category-header-btn").classList.remove("is-active");
+    document.getElementById("categoryOverlay").classList.remove("active");
+    document.body.style.overflow = "";
+}
+
+function selectCategory(category){
+    filterProducts(category);
+    closeCategoryMenu();
+}
+
+/* =================================================
+   FILTER
+================================================= */
+
+function filterProducts(category){
+
+    if(category === "All"){
+
+        currentProducts =
+            [...products];
+
+    }else{
+
+        currentProducts =
+            products.filter(
+                product =>
+                    product.category === category
+            );
+
+    }
+
+    displayProducts(currentProducts);
+
+}
+
+
+/* =================================================
+   SEARCH
+================================================= */
+
+function searchProducts(){
+
+    const text =
+        document
+        .getElementById("search")
+        .value
+        .toLowerCase();
+
+    const result =
+        currentProducts.filter(product =>
+
+            product.name
+            .toLowerCase()
+            .includes(text)
+
+            ||
+
+            product.category
+            .toLowerCase()
+            .includes(text)
+
+        );
+
+    displayProducts(result);
+
+}
+
+
+/* =================================================
+   ADD TO CART
+================================================= */
+
+function addToCart(id){
+
+    const product =
+        products.find(
+            item => item.id === id
+        );
+
+    if(!product) return;
+
+
+    const existing =
+        cart.find(
+            item => item.id === id
+        );
+
+
+    if(existing){
+
+        existing.quantity++;
+
+    }else{
+
+        cart.push({
+
+            id:product.id,
+
+            name:product.name,
+
+            price:product.price,
+
+            image:product.image,
+
+            quantity:1
+
+        });
+
+    }
+
+
+    saveCart();
+
+    updateCart();
+
+}
+
+
+/* =================================================
+   UPDATE CART
+================================================= */
+
+function updateCart(){
+
+    const count =
+        cart.reduce(
+            (total,item) =>
+                total + item.quantity,
+            0
+        );
+
+    document.getElementById(
+        "cartCount"
+    ).innerText = count;
+
+
+    renderCart();
+
+}
+
+
+/* =================================================
+   RENDER CART
+================================================= */
+
+function renderCart(){
+
+    const container =
+        document.getElementById(
+            "cartItems"
+        );
+
+    container.innerHTML = "";
+
+    let total = 0;
+
+    document.getElementById("checkoutBox").style.display = "block";
+
+    if(cart.length === 0){
+
+        container.innerHTML =
+            "<p>Your cart is empty</p>";
+
+        document.getElementById("checkoutBox").style.display = "none";
+
+        document.getElementById(
+            "cartTotal"
+        ).innerText = "";
+
+        return;
+    }
+
+
+    cart.forEach(item => {
+
+        const itemTotal =
+            item.price * item.quantity;
+
+        total += itemTotal;
+
+
+        container.innerHTML += `
+
+            <div class="cart-item">
+
+                <img
+                    src="${item.image}"
+                    alt="${item.name}"
+                >
+
+                <div class="cart-info">
+
+                    <b>
+                        ${item.name}
+                    </b>
+
+                    <div>
+                        ৳${item.price} × ${item.quantity} = <b>৳${itemTotal}</b>
+                    </div>
+
+                    <div class="qty">
+
+                        <button
+                            onclick="changeQty(${item.id},-1)"
+                        >
+                            -
+                        </button>
+
+                        <span>
+                            ${item.quantity}
+                        </span>
+
+                        <button
+                            onclick="changeQty(${item.id},1)"
+                        >
+                            +
+                        </button>
+
+                    </div>
+
+                    <div class="remove"
+                         onclick="removeItem(${item.id})">
+
+                        Remove
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        `;
+
+    });
+
+
+    document.getElementById(
+        "cartTotal"
+    ).innerText = total;
+
+    updateSummary();
+
+}
+
+
+/* =================================================
+   QUANTITY
+================================================= */
+
+function changeQty(id,amount){
+
+    const item =
+        cart.find(
+            item => item.id === id
+        );
+
+    if(!item) return;
+
+
+    item.quantity += amount;
+
+
+    if(item.quantity <= 0){
+
+        cart =
+            cart.filter(
+                item => item.id !== id
+            );
+
+    }
+
+
+    saveCart();
+
+    updateCart();
+
+}
+
+
+/* =================================================
+   REMOVE
+================================================= */
+
+function removeItem(id){
+
+    cart =
+        cart.filter(
+            item => item.id !== id
+        );
+
+
+    saveCart();
+
+    updateCart();
+
+}
+
+
+/* =================================================
+   CART MODAL
+================================================= */
+
+function openCart(){
+
+    renderCart();
+
+    document.getElementById(
+        "cartModal"
+    ).style.display = "flex";
+
+    document.querySelector(".cart-btn").classList.add("is-active");
+
+}
+
+
+function closeCart(){
+
+    document.getElementById(
+        "cartModal"
+    ).style.display = "none";
+
+    document.querySelector(".cart-btn").classList.remove("is-active");
+
+}
+
+
+/* =================================================
+   PLACE ORDER (CASH ON DELIVERY)
+================================================= */
+
+function updateSummary(){
+    const sub = cart.reduce((t,i) => t + i.price * i.quantity, 0);
+    const fee = DELIVERY_CHARGE[getArea()];
+    document.getElementById("subTotal").innerText = sub;
+    document.getElementById("deliveryFee").innerText = fee;
+    document.getElementById("grandTotal").innerText = sub + fee;
+    document.getElementById("optDhaka").classList.toggle("active", getArea()==="dhaka");
+    document.getElementById("optOutside").classList.toggle("active", getArea()==="outside");
+}
+
+async function placeOrder(){
+
+    if(cart.length === 0){
+        alert("Your cart is empty!");
+        return;
+    }
+
+    const c = validateCustomer("");
+    if(!c) return;
+
+    const sub = cart.reduce((t,i) => t + i.price * i.quantity, 0);
+    const fee = DELIVERY_CHARGE[getArea()];
+
+    const order = {
+        id: "AV" + Date.now().toString().slice(-8),
+        date: new Date().toISOString(),
+        name: c.name,
+        phone: c.phone,
+        address: c.address,
+        area: getArea() === "dhaka" ? "Inside Dhaka" : "Outside Dhaka",
+        payment: "Cash on Delivery",
+        items: cart.map(i => ({
+            name: i.name, quantity: i.quantity,
+            price: i.price, total: i.price * i.quantity
+        })),
+        subTotal: sub,
+        deliveryCharge: fee,
+        grandTotal: sub + fee
+    };
+
+    const btn = document.getElementById("placeBtn");
+    btn.disabled = true;
+    btn.innerText = "Please wait...";
+
+    try{
+        await submitOrder(order);
+    }catch(e){
+        btn.disabled = false;
+        btn.innerText = "✅ Place Order (Cash on Delivery)";
+        const err = document.getElementById("formError");
+        err.innerText = e.message === "wait"
+            ? "এই নম্বর থেকে এইমাত্র অর্ডার গেছে। ৩০ সেকেন্ড পর আবার চেষ্টা করুন।"
+            : "অর্ডার পাঠানো যায়নি। ইন্টারনেট চেক করে আবার চেষ্টা করুন।";
+        err.style.display = "block";
+        return;
+    }
+
+    cart = [];
+    saveCart();
+    document.getElementById("cartCount").innerText = 0;
+
+    document.querySelector("#cartModal .modal-box").innerHTML = successHTML(order);
+
+}
+
+
+/* =================================================
+   INITIAL
+================================================= */
+
+/* =================================================
+   HIGHLIGHT PRODUCTS
+   কোনো পণ্য হাইলাইটে আনতে সেই পণ্যের ভেতরে featured:true লিখবে।
+   কোনোটাতে না থাকলে প্রথম ৬টা পণ্য দেখাবে।
+================================================= */
+
+function displayHighlights(){
+    let list = products.filter(p => p.featured);
+    if(list.length === 0) list = products.slice(0,6);
+    const row = document.getElementById("highlights");
+    row.innerHTML = list.map(p => `
+        <div class="hl-slide" data-id="${p.id}">
+            <img class="bg" src="${p.image}" alt="">
+            <img class="fg" src="${p.image}" alt="${p.name}">
+        </div>`).join("");
+
+    /* click -> product page (drag করলে click হবে না) */
+    let moved = false;
+    row.addEventListener("click", e => {
+        const slide = e.target.closest(".hl-slide");
+        if(slide && !moved) openProduct(Number(slide.dataset.id));
+    });
+
+    /* mouse drag (touch এ নিজে থেকেই swipe হয়) */
+    let down = false, startX = 0, startLeft = 0;
+    row.addEventListener("mousedown", e => {
+        down = true; moved = false; startX = e.pageX; startLeft = row.scrollLeft;
+        row.classList.add("dragging");
+    });
+    window.addEventListener("mousemove", e => {
+        if(!down) return;
+        const dx = e.pageX - startX;
+        if(Math.abs(dx) > 5) moved = true;
+        row.scrollLeft = startLeft - dx;
+    });
+    window.addEventListener("mouseup", () => {
+        if(!down) return;
+        down = false;
+        row.classList.remove("dragging");
+        const w = row.clientWidth;
+        row.scrollTo({ left: Math.round(row.scrollLeft / w) * w, behavior:"smooth" });
+        setTimeout(() => { moved = false; }, 0);
+    });
+
+    /* auto slide: ডান থেকে বামে */
+    let paused = false;
+    ["touchstart","mouseenter"].forEach(ev => row.addEventListener(ev, () => paused = true));
+    ["touchend","mouseleave"].forEach(ev => row.addEventListener(ev, () => {
+        setTimeout(() => paused = false, 1500);
+    }));
+    if(list.length > 1){
+        setInterval(() => {
+            if(paused || down) return;
+            const w = row.clientWidth;
+            if(row.scrollLeft + w >= row.scrollWidth - 5){
+                row.scrollTo({ left:0, behavior:"smooth" });
+            }else{
+                row.scrollBy({ left:w, behavior:"smooth" });
+            }
+        }, 3500);
+    }
+}
+
+displayProducts(products);
+
+displayHighlights();
+
+updateCart();
+
+/* back করে ফিরলে আগের রঙ */
+window.addEventListener("pageshow", () => {
+    document.querySelector(".cart-btn").classList.remove("is-active");
+    document.querySelector(".category-header-btn").classList.remove("is-active");
+});
+
+</script>
+
+</body>
+</html>
